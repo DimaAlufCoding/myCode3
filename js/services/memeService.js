@@ -1,24 +1,26 @@
 let gMeme = {
     selectedImgId: null,
     selectedLineIdx: 0,
-    lines: [{ txt: 'Default text', size: 50, color: 'white',x:150,y:20 }]
+    lines: [
+        { txt: 'Default text', size: 40, color: '#FFFFFF', x: 250, y: 80 }
+    ]
 }
 
 function getMeme() {
     return gMeme
 }
 
+function setLineTxt(txt) { 
+    const selectedLineIdx = gMeme.selectedLineIdx
+    if (gMeme.lines[selectedLineIdx]) {
+        gMeme.lines[selectedLineIdx].txt = txt
+    }
+}
+
 function setImg(imgId) {
     gMeme.selectedImgId = imgId
 }
 
-
-function setLineTxt(newText) {
-    const selectedLineIdx = gMeme.selectedLineIdx
-    if (gMeme.lines[selectedLineIdx]) {
-        gMeme.lines[selectedLineIdx].txt = newText
-    }
-}
 
 function setColor(color) {
     const selectedLineIdx = gMeme.selectedLineIdx
@@ -41,7 +43,7 @@ function setFontSize(delta) {
 function setupTextInput() {
     const textInput = document.getElementById('meme-text')
     textInput.addEventListener('input', (event) => {
-        setLineTxt(event.target.value) 
+        setLineTxt(event.target.value)
         renderMeme(getCurrentImage())
     })
 }
@@ -52,39 +54,86 @@ function setupColorPicker() {
 }
 
 function addLine() {
-    console.log('adding line')
     const newY = gMeme.lines.length === 0 ? 50 : gMeme.lines[gMeme.lines.length - 1].y + 40
 
     const newLine = {
         txt: 'New Line',
-        size: 20,
-        color : gMeme.lines[0].color,
-        x: 150,
+        size: 40,
+        color: gMeme.lines.color,
+        x: 250,
         y: newY
     }
     gMeme.lines.push(newLine)
+
     gMeme.selectedLineIdx = gMeme.lines.length - 1
-    console.log(gMeme.selectedLineIdx)
 }
 
 
 
-function setText(meme,x,y) {
+function setText(meme) {
     console.log(gMeme.lines)
 
-    meme.lines.forEach(line => {
-    gCtx.font = `${meme.lines[0].size}px Arial`
-    gCtx.fillStyle = meme.lines[0].color
-    gCtx.textAlign = "center"
-    gCtx.strokeStyle = "red"
-    const textWidth = gCtx.measureText(meme.lines[0].txt).width
-    const textHeight = meme.lines[0].size
-    gCtx.lineWidth = 2
-    gCtx.strokeRect(
-        x - textWidth / 2 - 5,
-        y - textHeight,
-        textWidth + 10,
-        textHeight + 10 
+    meme.lines.forEach((line, idx) => {
+        const fontFamily = line.font || 'Arial'
+
+        gCtx.font = `${line.size}px ${fontFamily}`
+        gCtx.fillStyle = line.color
+        gCtx.textAlign = "center"
+        // gCtx.strokeStyle = "red"
+        gCtx.lineWidth = 2
+
+        gCtx.fillText(line.txt, line.x, line.y)
+        // gCtx.strokeText(line.txt, line.x, line.y)
+
+
+        if (idx === meme.selectedLineIdx) {
+            const textWidth = gCtx.measureText(line.txt).width
+            const textHeight = line.size
+
+            gCtx.beginPath()
+            gCtx.strokeStyle = "grey"
+
+            const boxX = line.x - textWidth / 2 - 5
+            const boxY = line.y - textHeight
+            const boxWidth = textWidth + 10
+            const boxHeight = textHeight + 10
+
+            gCtx.rect(
+                boxX,
+                boxY,
+                boxWidth,
+                boxHeight
+            )
+            gCtx.stroke()
+            gCtx.closePath()
+        }
+    }
     )
-    gCtx.fillText(line.txt, x, y+line.y)})
 }
+
+
+function removeLine(){
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    gMeme.selectedLineIdx = 0
+}
+
+
+function setLineAlign(align){
+    const selectedLineIdx = gMeme.selectedLineIdx
+    if (gMeme.lines[selectedLineIdx]) {
+        gMeme.lines[selectedLineIdx].x = align
+    }
+}
+
+function setFont(font){
+    const selectedLineIdx = gMeme.selectedLineIdx
+    if (gMeme.lines[selectedLineIdx]) {
+        gMeme.lines[selectedLineIdx].font = font
+    }
+}
+
+
+
+
+
+

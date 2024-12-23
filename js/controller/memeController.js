@@ -1,6 +1,6 @@
 let gElCanvas
 let gCtx
-let gCurrColor = "black"
+let gCurrColor = "white"
 const CANVAS_WIDTH = 500
 const CANVAS_HEIGHT = 500
 
@@ -18,7 +18,7 @@ function renderMeme(img) {
     if (!img) return
 
     const meme = getMeme()
-    
+
     const imgRatio = img.naturalWidth / img.naturalHeight
     let renderWidth = CANVAS_WIDTH
     let renderHeight = CANVAS_HEIGHT
@@ -43,38 +43,71 @@ function renderMeme(img) {
 
 
 function clearCanvas() {
-    
-    if(!gCtx) return
+
+    if (!gCtx) return
     gCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 }
 
 function onChangeColor(event) {
     const selectedColor = event.target.value
-    setColor(selectedColor) 
+    setColor(selectedColor)
     renderMeme(getCurrentImage())
 }
 
 
 function onChangeFontSize(delta) {
-    setFontSize(delta) 
+    setFontSize(delta)
     renderMeme(getCurrentImage())
-        
+
 }
 
 
-function onAddLine(){
+function onAddLine() {
     addLine()
+
+    const meme = getMeme()
     const textInput = document.getElementById('meme-text')
     textInput.value = gMeme.lines[gMeme.selectedLineIdx].txt
-    renderMeme(getCurrentImage())   
+    renderMeme(getCurrentImage())
+}
+
+function onSwitchLine() {
+    const meme = getMeme()
+    meme.selectedLineIdx++
+
+    if (meme.selectedLineIdx >= meme.lines.length) {
+        meme.selectedLineIdx = 0
+    }
+
+    const textInput = document.getElementById('meme-text')
+    textInput.value = gMeme.lines[gMeme.selectedLineIdx].txt
+
+    renderMeme(getCurrentImage())
 }
 
 
-    
+
+function onRemoveLine() {
+    removeLine()
+    renderMeme(getCurrentImage())
+}
+
+
+function onAlignText(align) {   
+    setLineAlign(align)
+    renderMeme(getCurrentImage())
+}
+
+function onChnageFont(font) {
+    setFont(font)
+    renderMeme(getCurrentImage())
+}
 
 
 
-    
+
+
+
 
 
 

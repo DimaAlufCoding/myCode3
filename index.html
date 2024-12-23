@@ -20,9 +20,26 @@
             </button>
             <section id="editor">
                 <input type="color" id="color-picker" value="#FFFFFF">
-                <button id="increase-font-btn" onclick="onChangeFontSize(2)">Increase Font</button>
-                <button id="decrease-font-btn" onclick="onChangeFontSize(-2)">Decrease Font</button>
+                <button id="increase-font-btn" onclick="onChangeFontSize(2)">+</button>
+                <button id="decrease-font-btn" onclick="onChangeFontSize(-2)">-</button>
                 <button id="add-line" onclick="onAddLine()">Add line</button>
+                <button id="delete-line" onclick="onRemoveLine()">Delete line</button>
+                <button id="switch-line" onclick="onSwitchLine()">Switch line</button>
+                <button id="align-left" onclick="onAlignText('100')">Left</button>
+                <button id="align-center" onclick="onAlignText('250')">Center</button>
+                <button id="align-right" onclick="onAlignText('400')">Right</button>
+                <select id="font-family" onchange="onChnageFont(this.value)">
+                    <option value="" id="placeholder" disabled selected>Select Font</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Impact">Impact</option>
+                    <option value="Comic Sans MS">Comic Sans MS</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+
+                
+
+
             </section>
 
         </section>
