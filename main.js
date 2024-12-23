@@ -9,6 +9,8 @@ attachEventListeners()
 
 function initApp() {
     renderGallery()
+    setupColorPicker()
+    
 }
 
 
@@ -40,6 +42,12 @@ function getCurrentImage() {
 
 
     return img
+}
+
+
+function onDownloadImg(elLink) {
+    const imgContent = gElCanvas.toDataURL('image/jpeg')
+    elLink.href = imgContent
 }
 
 

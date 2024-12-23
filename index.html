@@ -15,6 +15,16 @@
         <section id="editor">
             <canvas id="meme-canvas"></canvas>
             <input type="text" id="meme-text" placeholder="Enter meme text">
+            <button class="btn">
+                <a href="#" class="btn" onclick="onDownloadImg(this)" download="my-img.jpg">Download</a>
+            </button>
+            <section id="editor">
+                <input type="color" id="color-picker" value="#FFFFFF">
+                <button id="increase-font-btn" onclick="onChangeFontSize(2)">Increase Font</button>
+                <button id="decrease-font-btn" onclick="onChangeFontSize(-2)">Decrease Font</button>
+                <button id="add-line" onclick="onAddLine()">Add line</button>
+            </section>
+
         </section>
     </main>
     <script src="js/controller/galleryController.js"></script>

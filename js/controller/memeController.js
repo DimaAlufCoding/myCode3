@@ -12,8 +12,7 @@ function initCanvas() {
 }
 
 function renderMeme(img) {
-    if (!gElCanvas) initCanvas();
-
+    if (!gElCanvas) initCanvas()
     clearCanvas()
 
     if (!img) return
@@ -36,7 +35,7 @@ function renderMeme(img) {
     const centerX = CANVAS_WIDTH / 2
     const centerY = CANVAS_HEIGHT / 2
 
-    drawText(meme, centerX, centerY)
+    setText(meme, centerX, centerY)
 
 }
 
@@ -49,9 +48,33 @@ function clearCanvas() {
     gCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 }
 
-function drawText(meme, x, y) {
-    gCtx.font = `${meme.lines[0].size}px Arial`
-    gCtx.fillStyle = meme.lines[0].color
-    gCtx.textAlign = "center"
-    gCtx.fillText(meme.lines[0].txt, x, y)
+function onChangeColor(event) {
+    const selectedColor = event.target.value
+    setColor(selectedColor) 
+    renderMeme(getCurrentImage())
 }
+
+
+function onChangeFontSize(delta) {
+    setFontSize(delta) 
+    renderMeme(getCurrentImage())
+        
+}
+
+
+function onAddLine(){
+    addLine()
+    const textInput = document.getElementById('meme-text')
+    textInput.value = gMeme.lines[gMeme.selectedLineIdx].txt
+    renderMeme(getCurrentImage())   
+}
+
+
+    
+
+
+
+    
+
+
+
